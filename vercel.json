@@ -8,8 +8,12 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/(auth/.*|products.*|submit-order|get-details/.*)",
       "dest": "main.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "CAKE ITT PROJECT/CAKE ITT PROJECT/$1"
     }
   ]
 }
