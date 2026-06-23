@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cake It - Home</title>
+  <link rel="icon" type="image/png" href="images/favicon.ico">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <a href="#hero" class="logo-link">
+  <img src="Images/cakelogo.webp" alt="Cake Itt Logo" class="logo">
+    </a>
+    <nav>
+      <a href="#hero">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="#" id="cart-toggle">🛒 Cart (<span id="cart-count">0</span>)</a>
+
+      <div class="account-dropdown">
+        <span class="account-icon">Account 👤</span>
+        <div class="dropdown-content">
+          <a href="login.html">🔑 Login</a>
+          <a href="signup.html">📝 Signup</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <div class="hero" id="hero">
+    <div class="hero-text">
+      <h2>Where Every Slice Feels Special</h2>
+      <a class="hero-button" href="shop.html">Shop Now</a>
+    </div>
+  </div>
+
+  <!-- About Section -->
+<section class="about reveal" id="about">
+  <div class="about-container">
+    
+    <div class="about-image">
+      <img src="images/about-cake.jpg" alt="Cake Itt About Image">
+    </div>
+
+    <div class="about-text">
+      <h2>About Cake Itt</h2>
+      <p>
+        At Cake Itt, we believe every celebration deserves something sweet, beautiful, and memorable. From birthdays and weddings to simple cravings and surprise treats, our cakes are made to bring joy to every moment.
+      </p>
+      <p>
+        We focus on fresh ingredients, neat designs, rich flavours, and that soft, satisfying taste that makes every slice worth remembering. Whether you want something simple, classy, colourful, or fully customized, Cake Itt is here to make your sweet ideas come alive.
+      </p>
+    </div>
+
+  </div>
+</section>
+  <!-- Featured Products -->
+  <!-- Featured Products -->
+<section class="featured reveal">
+  <div class="container">
+    <h2>Our Sweet Selection</h2>
+    <p class="featured-intro">
+      From celebration cakes to pastries and party treats, Cake Itt brings you fresh, tasty, and beautifully made goodies for every craving.
+    </p>
+
+    <div class="product-scroll">
+      <div class="item">
+        <img src="images/cakes.jpg" alt="Cakes">
+        <h3>Cakes</h3>
+        <p>Beautiful cakes made for birthdays, celebrations, and special moments.</p>
+      </div>
+
+      <div class="item">
+        <img src="images/cupcakes.jpg" alt="Cupcakes">
+        <h3>Cupcakes</h3>
+        <p>Soft, cute, and perfect for sharing — or not sharing at all.</p>
+      </div>
+
+      <div class="item">
+        <img src="images/small-chops.jpg" alt="Small Chops">
+        <h3>Small Chops</h3>
+        <p>Party-ready bites that make every event feel complete.</p>
+      </div>
+
+      <div class="item">
+        <img src="images/cookies.jpg" alt="Cookies">
+        <h3>Cookies</h3>
+        <p>Freshly baked cookies with a sweet, satisfying bite.</p>
+      </div>
+
+      <div class="item">
+        <img src="images/parfait.jpg" alt="Parfait">
+        <h3>Parfait</h3>
+        <p>Creamy, fruity, chilled, and perfect for a light treat.</p>
+      </div>
+
+      <div class="item">
+        <img src="images/doughnuts.jpg" alt="Doughnuts">
+        <h3>Doughnuts</h3>
+        <p>Soft, fluffy, and glazed for maximum happiness.</p>
+      </div>
+
+      <div class="item">
+        <img src="images/cake-loaves.jpg" alt="Cake Loaves">
+        <h3>Cake Loaves</h3>
+        <p>Simple, rich, and perfect for tea time, gifting, or casual cravings.</p>
+      </div>
+
+      <div class="item">
+        <img src="images/pastries.jpg" alt="Pastries">
+        <h3>Pastries</h3>
+        <p>Golden baked treats like meat pies, sausage rolls, and more.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Contact/CTA Section -->
+  <!-- CTA Section -->
+<!-- CTA Section -->
+<section class="cta reveal" id="cta">
+  <div class="cta-container">
+
+    <div class="cta-text">
+      <h2>Make Every Moment Sweeter with Cake Itt</h2>
+
+      <p>
+        Whether you are planning a birthday, surprise package, hangout, school event,
+        family celebration, or you simply want something sweet because life is already
+        stressful enough, Cake Itt is here to make it special.
+      </p>
+
+      <p>
+        From beautifully designed cakes to cupcakes, doughnuts, parfaits, cookies,
+        cake loaves, small chops, and tasty pastries, we create treats that look good,
+        taste amazing, and leave people asking, “Who made this?”
+      </p>
+
+      <p>
+        Need help or want to place a custom order? Contact us at
+        <a href="mailto:support@cakeitt.com">support@cakeitt.com</a>
+      </p>
+
+      <a href="shop.html" class="hero-button">Explore Our Treats</a>
+    </div>
+
+    <div class="cta-image">
+      <img src="images/cta-cake.jpg" alt="Cake Itt Treats">
+    </div>
+
+  </div>
+</section>
+
+  <!-- Cart Panel -->
+  <div class="cart-panel" id="cart-panel">
+    <h2>Your Cart</h2>
+    <ul id="cart-items"></ul>
+    <button id="clear-cart">Clear Cart</button>
+    <button id="checkout">Checkout</button>
+    <button id="close-cart">Close</button>
+  </div>
+
+  <!-- Contact Form Section -->
+<!-- Contact Form Section -->
+<!-- Contact Form Section -->
+<section class="contact reveal" id="contact">
+  <div class="contact-container">
+
+    <div class="contact-image">
+      <img src="images/contact-us.jpg" alt="Contact Cake Itt">
+    </div>
+
+    <div class="contact-text">
+      <h2>Contact Us</h2>
+      <p>We’d love to hear from you. Send us a message below.</p>
+
+      <form class="contact-form" action="#" method="POST">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+
+    <div class="footer-brand">
+      <img src="images/cakelogo.webp" alt="Cake Itt Logo" class="footer-logo">
+      <p>
+        Fresh cakes, pastries, small chops, parfaits, doughnuts, cookies,
+        and sweet treats made for every moment.
+      </p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>Email: support@cakeitt.com</p>
+      <p>Phone: +234 000 000 0000</p>
+      <p>Ogun state, Nigeria</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 Cake Itt. All rights reserved.</p>
+  </div>
+</footer>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
+
+

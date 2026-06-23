@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | Cake It</title>
+  <link rel="icon" type="image/png" href="images/favicon.ico">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+      <a href="index.html" class="logo-link">
+  <img src="Images/cakelogo.webp" alt="Cake Itt Logo" class="logo">
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="#" id="cart-toggle">🛒 Cart (<span id="cart-count">0</span>)</a>
+      <div class="account-dropdown">
+        <span class="account-icon">Account 👤</span>
+        <div class="dropdown-content">
+          <a href="login.html">🔑 Login</a>
+          <a href="signup.html">📝 Signup</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+<div class="form-wrapper login-wrapper auth-bg">
+    <div class="form-card">
+      <h2>Welcome Back</h2>
+      <!-- ✅ IDs added to match JS -->
+      <form id="login-form">
+        <label for="login-email">Email Address</label>
+        <input type="email" id="login-email" placeholder="you@example.com" required />
+
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="••••••••" required />
+
+        <button type="submit">🔑 Login</button>
+        <p class="switch-text">Don’t have an account? <a href="signup.html">Sign up</a></p>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+  <div class="footer-container">
+
+    <div class="footer-brand">
+      <img src="images/cakelogo.webp" alt="Cake Itt Logo" class="footer-logo">
+      <p>
+        Fresh cakes, pastries, small chops, parfaits, doughnuts, cookies,
+        and sweet treats made for every moment.
+      </p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>Email: support@cakeitt.com</p>
+      <p>Phone: +234 000 000 0000</p>
+      <p>Ogun state, Nigeria</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 Cake Itt. All rights reserved.</p>
+  </div>
+</footer>
+
+  <!--  Only your module file (it initializes Firebase itself) -->
+<script src="login.js"></script>
+</body>
+</html>
+
+

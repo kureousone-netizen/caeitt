@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Details | Cake Itt</title>
+  <link rel="icon" type="image/png" href="images/favicon.ico">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo-link">
+      <img src="Images/cakelogo.webp" alt="Cake Itt Logo" class="logo">
+    </a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="#" id="cart-toggle">🛒 Cart (<span id="cart-count">0</span>)</a>
+
+      <div class="account-dropdown">
+        <span class="account-icon">Account 👤</span>
+        <div class="dropdown-content">
+          <a href="login.html">🔑 Login</a>
+          <a href="signup.html">📝 Signup</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="product-detail-page">
+    <section class="product-detail-container">
+
+      <div class="product-detail-image">
+        <img id="product-image" src="" alt="Product Image">
+      </div>
+
+      <div class="product-detail-info">
+        <a href="shop.html" class="back-to-shop">← Back to Shop</a>
+
+<p class="product-kicker">Customize Your Order</p>
+
+<h1 id="product-name">Product Name</h1>
+
+<p id="product-description">Product description will appear here.</p>
+
+<p class="product-helper-text">
+  Choose your preferred options below. You can review everything in your cart before placing your order.
+</p>
+        <form id="product-options-form">
+
+          <div id="flavour-box" class="option-group">
+            <label for="flavour">Choose Flavour</label>
+            <select id="flavour"></select>
+          </div>
+
+          <div id="size-box" class="option-group">
+            <label for="size">Choose Size</label>
+            <select id="size"></select>
+          </div>
+
+          <div id="extra-box" class="option-group">
+            <label for="extra">Extra Option</label>
+            <select id="extra"></select>
+          </div>
+
+          <div id="message-box" class="option-group">
+            <label for="cake-message">Message on Cake</label>
+            <input type="text" id="cake-message" placeholder="e.g. Happy Birthday Ada" />
+          </div>
+
+          <div class="option-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" value="1" min="1" />
+          </div>
+
+          <button type="submit" class="product-add-btn">Add to Cart</button>
+
+          <p class="order-note">
+  Orders placed before 12pm qualify for guaranteed same-day delivery.
+</p>
+<p class="vendor-order-note">
+  Note: Items from different vendors cannot be mixed in one order.
+</p>
+        </form>
+      </div>
+
+    </section>
+  </main>
+
+  <div class="cart-panel" id="cart-panel">
+    <h2>Your Cart</h2>
+    <ul id="cart-items"></ul>
+    <button id="clear-cart">Clear Cart</button>
+    <button id="checkout">Checkout</button>
+    <button id="close-cart">Close</button>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-container">
+
+      <div class="footer-brand">
+        <img src="images/cakelogo.webp" alt="Cake Itt Logo" class="footer-logo">
+
+        <p>
+          Fresh cakes, pastries, small chops, parfaits, doughnuts, cookies,
+          and sweet treats made for every moment.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>Email: support@cakeitt.com</p>
+        <p>Phone: +234 000 000 0000</p>
+        <p>Ogun State, Nigeria</p>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Cake Itt. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="product.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop | Cake Itt</title>
+  <link rel="icon" type="image/png" href="images/favicon.ico">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo-link">
+      <img src="Images/cakelogo.webp" alt="Cake Itt Logo" class="logo">
+    </a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="#" id="cart-toggle">🛒 Cart (<span id="cart-count">0</span>)</a>
+
+      <div class="account-dropdown">
+        <span class="account-icon">Account 👤</span>
+        <div class="dropdown-content">
+          <a href="login.html">🔑 Login</a>
+          <a href="signup.html">📝 Signup</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Shop Vendor Section -->
+  <section class="shop-section">
+    <div class="shop-header">
+      <h2>Choose a Vendor</h2>
+      <p>
+        Select a vendor to view their available products. Items from different vendors
+        cannot be mixed in one order, so please clear your cart before switching vendors.
+      </p>
+    </div>
+
+    <div class="vendor-grid">
+      <button class="vendor-card" data-vendor="Bbestedinles & More">
+        <h3>Bbestedinles & More</h3>
+        <p>Butter Cream Cakes • Whipped Cream Cakes</p>
+      </button>
+
+      <button class="vendor-card" data-vendor="Blessed Cakes and Events">
+        <h3>Blessed Cakes and Events</h3>
+        <p>Butter Cream Cakes • Whipped Cream Cakes • Bento Cakes • Cake Loaves • Cupcakes • Parfait • Small Chops</p>
+      </button>
+
+      <button class="vendor-card" data-vendor="Dara Kakes">
+        <h3>Dara Kakes</h3>
+        <p>Butter Cream Cakes • Whipped Cream Cakes • Bento Cakes • Cupcakes • Small Chops</p>
+      </button>
+    </div>
+
+    <div id="vendor-products-area" class="vendor-products-area">
+      <h2 id="selected-vendor-title"></h2>
+      <p id="selected-vendor-note"></p>
+
+      <div id="vendor-product-grid" class="shop-grid"></div>
+    </div>
+  </section>
+
+  <!-- Cart Panel -->
+  <div class="cart-panel" id="cart-panel">
+    <h2>Your Cart</h2>
+    <ul id="cart-items"></ul>
+    <button id="clear-cart">Clear Cart</button>
+    <button id="checkout">Checkout</button>
+    <button id="close-cart">Close</button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+
+      <div class="footer-brand">
+        <img src="images/cakelogo.webp" alt="Cake Itt Logo" class="footer-logo">
+
+        <p>
+          Fresh cakes, pastries, small chops, parfaits, doughnuts, cookies,
+          and sweet treats made for every moment.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>Email: support@cakeitt.com</p>
+        <p>Phone: +234 000 000 0000</p>
+        <p>Ogun State, Nigeria</p>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Cake Itt. All rights reserved.</p>
+    </div>
+  </footer>
+  <script src="shop.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

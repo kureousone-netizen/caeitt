@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Summary | Cake Itt</title>
+  <link rel="icon" type="image/png" href="images/favicon.ico">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header with Nav -->
+  <header>
+    <a href="index.html" class="logo-link">
+      <img src="Images/cakelogo.webp" alt="Cake Itt Logo" class="logo">
+    </a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="#" id="cart-toggle">🛒 Cart (<span id="cart-count">0</span>)</a>
+
+      <div class="account-dropdown">
+        <span class="account-icon">Account 👤</span>
+        <div class="dropdown-content">
+          <a href="login.html">🔑 Login</a>
+          <a href="signup.html">📝 Signup</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Order Summary -->
+    <div class="form-wrapper order-wrapper">
+    <div class="form-card order-card">
+      <h2>Your Order Summary</h2>
+
+      <div id="summary-items"></div>
+
+      <hr style="margin: 1rem 0;" />
+
+      <h3 id="summary-total">Total: ₦0</h3>
+
+      <div class="summary-actions">
+        <a href="shop.html" class="hero-button">← Back to Shop</a>
+        <button id="show-payment-btn" class="hero-button" type="button">Proceed to Payment</button>
+      </div>
+
+      <div id="bank-payment-box" class="bank-payment-box">
+        <h3>Bank Transfer Details</h3>
+
+        <p>Please transfer the exact amount below to complete your order request.</p>
+
+        <div class="bank-details">
+  <p><strong>Account Name:</strong> Cake Itt</p>
+  <p><strong>Bank:</strong> Opay</p>
+  <p><strong>Account Number:</strong> <span id="account-number">1234567890</span></p>
+
+  <button id="copy-account-btn" class="copy-account-btn" type="button">
+    Copy Account Number
+  </button>
+
+  <p><strong>Amount:</strong> <span id="payment-amount">₦0</span></p>
+</div>
+
+        <p class="payment-note">
+          If you are paying from someone else’s account, please include your full name in the transaction remark so we can confirm your order easily.
+        </p>
+
+        <p class="payment-note">
+          After sending the money, click the button below. Your order will be submitted as
+          pending until payment is confirmed. Delivery will be made to the room number provided during signup.
+        </p>
+
+        <button id="money-sent-btn" class="hero-button money-sent-btn" type="button">
+          I’ve Sent the Money
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Cart Panel -->
+  <div class="cart-panel" id="cart-panel">
+    <h2>Your Cart</h2>
+    <ul id="cart-items"></ul>
+    <button id="clear-cart">Clear Cart</button>
+    <button id="checkout">Checkout</button>
+    <button id="close-cart">Close</button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+
+      <div class="footer-brand">
+        <img src="images/cakelogo.webp" alt="Cake Itt Logo" class="footer-logo">
+        <p>
+          Fresh cakes, pastries, small chops, parfaits, doughnuts, cookies,
+          and sweet treats made for every moment.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>Email: support@cakeitt.com</p>
+        <p>Phone: +234 000 000 0000</p>
+        <p>Ogun State, Nigeria</p>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Cake Itt. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Main Script -->
+  <script src="script.js"></script>
+
+  <!-- Order Summary Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const summaryContainer = document.getElementById("summary-items");
+      const totalDisplay = document.getElementById("summary-total");
+      const showPaymentBtn = document.getElementById("show-payment-btn");
+      const bankPaymentBox = document.getElementById("bank-payment-box");
+      const paymentAmount = document.getElementById("payment-amount");
+      const moneySentBtn = document.getElementById("money-sent-btn");
+      const copyAccountBtn = document.getElementById("copy-account-btn");
+      const accountNumber = document.getElementById("account-number");
+
+      const VAT_RATE = 0.0243;
+      const BASE_DELIVERY_FEE = 1000;
+      const DELIVERY_INCREMENT = 500;
+      const DELIVERY_INCREMENT_THRESHOLD = 100000;
+
+      const formatNaira = (amount) => {
+        return "₦" + Math.round(Number(amount || 0)).toLocaleString();
+      };
+      const calculateDeliveryFee = (subtotal) => {
+  const increments = Math.floor(subtotal / DELIVERY_INCREMENT_THRESHOLD);
+  return BASE_DELIVERY_FEE + (increments * DELIVERY_INCREMENT);
+};
+
+      const getDeliveryNote = () => {
+        const now = new Date();
+        const hour = now.getHours();
+
+        if (hour < 12) {
+          return "Same-day delivery guaranteed";
+        }
+
+        return "Same-day delivery possible, but not guaranteed";
+      };
+
+      let cart = [];
+      let subtotal = 0;
+      let vatAmount = 0;
+      let deliveryFee = 0;
+      let finalTotal = 0;
+      let deliveryNote = getDeliveryNote();
+
+      try {
+        cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        summaryContainer.innerHTML = "";
+
+        if (cart.length === 0) {
+          summaryContainer.innerHTML = "<p>Your cart is empty.</p>";
+          totalDisplay.style.display = "none";
+          showPaymentBtn.style.display = "none";
+          return;
+        }
+
+        cart.forEach((item) => {
+          const quantity = Number(item.quantity || 1);
+          const unitPrice = Number(item.unitPrice || item.price || 0);
+          const itemSubtotal = Number(item.totalPrice || unitPrice * quantity);
+
+          subtotal += itemSubtotal;
+
+          const itemDiv = document.createElement("div");
+          itemDiv.classList.add("summary-item");
+
+          itemDiv.innerHTML = `
+  <strong>${item.name}</strong><br>
+
+  ${item.vendor ? `Vendor: ${item.vendor}<br>` : ""}
+  ${item.flavour && item.flavour !== "None" ? `Flavour: ${item.flavour}<br>` : ""}
+  ${item.size && item.size !== "None" ? `Size: ${item.size}<br>` : ""}
+  ${item.extra && item.extra !== "None" ? `Option: ${item.extra}<br>` : ""}
+  ${item.message ? `Message: ${item.message}<br>` : ""}
+
+  Quantity: ${quantity}<br>
+  Unit Price: ${formatNaira(unitPrice)}<br>
+  Subtotal: <strong>${formatNaira(itemSubtotal)}</strong>
+`;
+
+          summaryContainer.appendChild(itemDiv);
+        });
+
+        vatAmount = subtotal * VAT_RATE;
+        deliveryFee = calculateDeliveryFee(subtotal);
+        finalTotal = subtotal + vatAmount + deliveryFee;
+
+        const deliveryDiv = document.createElement("div");
+        deliveryDiv.classList.add("summary-delivery-note");
+        deliveryDiv.innerHTML = `<strong>Delivery:</strong> ${deliveryNote}`;
+        summaryContainer.appendChild(deliveryDiv);
+
+        totalDisplay.innerHTML = `
+          Subtotal: ${formatNaira(subtotal)}<br>
+          VAT (2.43%): ${formatNaira(vatAmount)}<br>
+          Delivery Fee: ${formatNaira(deliveryFee)}<br>
+          <strong>Total: ${formatNaira(finalTotal)}</strong>
+        `;
+
+        paymentAmount.textContent = formatNaira(finalTotal);
+
+      } catch (error) {
+        console.error("Failed to load cart:", error);
+        summaryContainer.innerHTML = "<p>There was a problem loading your cart.</p>";
+        totalDisplay.style.display = "none";
+        showPaymentBtn.style.display = "none";
+      }
+
+      showPaymentBtn.addEventListener("click", () => {
+        bankPaymentBox.classList.add("active");
+        showPaymentBtn.style.display = "none";
+        bankPaymentBox.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+
+if (copyAccountBtn && accountNumber) {
+  copyAccountBtn.addEventListener("click", () => {
+    const textToCopy = accountNumber.textContent.trim();
+
+    const tempTextArea = document.createElement("textarea");
+    tempTextArea.value = textToCopy;
+
+    tempTextArea.style.position = "fixed";
+    tempTextArea.style.left = "-9999px";
+    tempTextArea.style.top = "0";
+
+    document.body.appendChild(tempTextArea);
+    tempTextArea.focus();
+    tempTextArea.select();
+
+    const copied = document.execCommand("copy");
+
+    document.body.removeChild(tempTextArea);
+
+    if (copied) {
+      copyAccountBtn.textContent = "Copied ✓";
+
+      if (typeof showToast === "function") {
+        showToast("Account number copied.");
+      }
+    } else {
+      copyAccountBtn.textContent = "Copy Failed";
+      alert("Copy failed. Please copy the account number manually: " + textToCopy);
+    }
+
+    setTimeout(() => {
+      copyAccountBtn.textContent = "Copy Account Number";
+    }, 1500);
+  });
+}
+moneySentBtn.addEventListener("click", async () => {
+  if (!cart || cart.length === 0) {
+    alert("Your cart is empty.");
+    return;
+  }
+
+  moneySentBtn.disabled = true;
+  moneySentBtn.textContent = "Submitting Order...";
+
+  try {
+    const orderData = {
+      items: cart,
+      subtotal: subtotal,
+      vatAmount: vatAmount,
+      deliveryFee: deliveryFee,
+      totalAmount: finalTotal,
+      paymentMethod: "Bank Transfer",
+      paymentStatus: "pending",
+      orderStatus: "awaiting confirmation"
+    };
+
+    // Send order to FastAPI
+    const response = await fetch("http://127.0.0.1:8000/submit-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderData)
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      // Save order ID locally
+      sessionStorage.setItem("lastOrderId", result.order.id);
+      localStorage.removeItem("cart");
+
+      sessionStorage.setItem(
+        "toastMessage",
+        `Order ${result.order.id} received! Please wait for confirmation.`
+      );
+
+      window.location.href = "index.html";
+    } else {
+      throw new Error(result.message || "Order failed");
+    }
+
+  } catch (error) {
+    console.error("Order error:", error);
+    alert("Failed to submit order. Please try again.");
+    moneySentBtn.disabled = false;
+    moneySentBtn.textContent = "I've Sent the Money";
+  }
+});
+ 
+    });
+  </script>
+
+</body>
+</html>

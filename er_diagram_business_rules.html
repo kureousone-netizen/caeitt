@@ -1,0 +1,190 @@
+
+<div id="erd" style="padding:8px 0"></div>
+<style>
+#erd svg { width:100%; height:auto; }
+#erd svg .label { font-family: "Anthropic Sans", sans-serif !important; }
+</style>
+<script type="module">
+import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+await document.fonts.ready;
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  fontFamily: '"Anthropic Sans", sans-serif',
+  themeVariables: {
+    darkMode: dark,
+    fontSize: '13px',
+    fontFamily: '"Anthropic Sans", sans-serif',
+    lineColor: dark ? '#9c9a92' : '#73726c',
+    textColor: dark ? '#c2c0b6' : '#3d3d3a',
+    primaryColor: dark ? '#3C3489' : '#EEEDFE',
+    primaryTextColor: dark ? '#CECBF6' : '#26215C',
+    primaryBorderColor: dark ? '#534AB7' : '#AFA9EC',
+    secondaryColor: dark ? '#085041' : '#E1F5EE',
+    secondaryTextColor: dark ? '#9FE1CB' : '#04342C',
+    secondaryBorderColor: dark ? '#0F6E56' : '#5DCAA5',
+    tertiaryColor: dark ? '#444441' : '#F1EFE8',
+    tertiaryTextColor: dark ? '#D3D1C7' : '#2C2C2A',
+    tertiaryBorderColor: dark ? '#5F5E5A' : '#B4B2A9',
+  }
+});
+
+const diagram = `erDiagram
+  USER {
+    uuid id PK
+    string full_name
+    string email
+    boolean is_senior_staff
+    uuid team_id FK
+  }
+  TEAM {
+    uuid id PK
+    string name
+  }
+  RECORD {
+    uuid id PK
+    uuid owner_id FK
+    uuid created_by FK
+    uuid team_id FK
+    string status
+    boolean has_potential_value
+    timestamp created_at
+  }
+  LEVEL {
+    uuid id PK
+    int level_number
+    string description
+  }
+  USER_LEVEL_PROGRESS {
+    uuid id PK
+    uuid user_id FK
+    uuid level_id FK
+    boolean all_actions_completed
+    timestamp completed_at
+  }
+  PAYMENT_SESSION {
+    uuid id PK
+    uuid user_id FK
+    string status
+    timestamp initiated_at
+    timestamp terminated_at
+    int timeout_seconds
+  }
+  PRODUCT_TYPE {
+    uuid id PK
+    string name
+    boolean interest_upfront
+    boolean allows_early_withdrawal
+    decimal min_withdrawal_amount
+  }
+  PRODUCT {
+    uuid id PK
+    uuid product_type_id FK
+    uuid customer_id FK
+    string name
+    decimal balance
+  }
+  WALLET {
+    uuid id PK
+    uuid product_id FK
+    string wallet_type
+    decimal min_withdrawal
+    decimal balance
+  }
+  WITHDRAWAL {
+    uuid id PK
+    uuid wallet_id FK
+    uuid customer_id FK
+    decimal amount
+    string status
+    timestamp initiated_at
+    timestamp processed_at
+    int processing_hours_limit
+  }
+  WORKING_HOURS_CONFIG {
+    uuid id PK
+    string day_of_week
+    boolean is_working_day
+  }
+  PUBLIC_HOLIDAY {
+    uuid id PK
+    date holiday_date
+    string description
+  }
+  OVERRIDE_ACTION {
+    uuid id PK
+    uuid authorised_by FK
+    uuid record_id FK
+    string rule_overridden
+    string justification
+    string protection_objective
+    timestamp performed_at
+  }
+  AUDIT_LOG {
+    uuid id PK
+    uuid record_id FK
+    uuid performed_by FK
+    string action_type
+    jsonb change_detail
+    timestamp logged_at
+  }
+  REASSIGNMENT {
+    uuid id PK
+    uuid record_id FK
+    uuid from_user_id FK
+    uuid to_user_id FK
+    string reason
+    timestamp reassigned_at
+  }
+
+  TEAM ||--o{ USER : "has members"
+  USER ||--o{ RECORD : "creates"
+  USER ||--o{ RECORD : "owns"
+  TEAM ||--o{ RECORD : "holds"
+  USER ||--o{ USER_LEVEL_PROGRESS : "tracks"
+  LEVEL ||--o{ USER_LEVEL_PROGRESS : "referenced by"
+  USER ||--o{ PAYMENT_SESSION : "initiates"
+  PRODUCT_TYPE ||--o{ PRODUCT : "defines"
+  USER ||--o{ PRODUCT : "holds"
+  PRODUCT ||--o{ WALLET : "contains"
+  WALLET ||--o{ WITHDRAWAL : "sources"
+  USER ||--o{ WITHDRAWAL : "requests"
+  WORKING_HOURS_CONFIG ||--o{ WITHDRAWAL : "governs"
+  PUBLIC_HOLIDAY ||--o{ WITHDRAWAL : "affects"
+  USER ||--o{ OVERRIDE_ACTION : "authorises"
+  RECORD ||--o{ OVERRIDE_ACTION : "subject of"
+  RECORD ||--o{ AUDIT_LOG : "logged in"
+  USER ||--o{ AUDIT_LOG : "recorded by"
+  RECORD ||--o{ REASSIGNMENT : "reassigned via"
+  USER ||--o{ REASSIGNMENT : "from"
+  USER ||--o{ REASSIGNMENT : "to"
+`;
+
+const { svg } = await mermaid.render('erd-svg', diagram);
+document.getElementById('erd').innerHTML = svg;
+
+document.querySelectorAll('#erd svg .node').forEach(node => {
+  const firstPath = node.querySelector('path[d]');
+  if (!firstPath) return;
+  const d = firstPath.getAttribute('d');
+  const nums = d.match(/-?[\d.]+/g)?.map(Number);
+  if (!nums || nums.length < 8) return;
+  const xs = [nums[0], nums[2], nums[4], nums[6]];
+  const ys = [nums[1], nums[3], nums[5], nums[7]];
+  const x = Math.min(...xs), y = Math.min(...ys);
+  const w = Math.max(...xs) - x, h = Math.max(...ys) - y;
+  const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+  rect.setAttribute('x', x); rect.setAttribute('y', y);
+  rect.setAttribute('width', w); rect.setAttribute('height', h);
+  rect.setAttribute('rx', '8');
+  for (const a of ['fill', 'stroke', 'stroke-width', 'class', 'style']) {
+    if (firstPath.hasAttribute(a)) rect.setAttribute(a, firstPath.getAttribute(a));
+  }
+  firstPath.replaceWith(rect);
+});
+
+document.querySelectorAll('#erd svg .row-rect-odd path, #erd svg .row-rect-even path').forEach(p => {
+  p.setAttribute('stroke', 'none');
+});
+</script>
