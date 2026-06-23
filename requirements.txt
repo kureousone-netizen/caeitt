@@ -1,2 +1,6 @@
 fastapi
 pydantic
+sqlalchemy
+PyJWT
+mysql-connector-python
+pymysql
